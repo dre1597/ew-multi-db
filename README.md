@@ -1,3 +1,8 @@
+# About
+
+From Erick
+Wendel [course "Imersão em desenvolvimento de APIs com Node.js"](https://erickwendel.teachable.com/courses/enrolled/448292).
+
 To create a new user on MongoDB, use the following command:
 
 ```bash
