@@ -6,10 +6,9 @@ class PostgresStrategy extends ICrud {
     super();
     this._driver = null;
     this._heroes = null;
-    this._connect();
   }
 
-  _connect() {
+  async connect() {
     this._driver = new Sequelize('heroes', 'postgres', 'postgres', {
       host: 'localhost',
       dialect: 'postgres',
@@ -18,10 +17,10 @@ class PostgresStrategy extends ICrud {
       port: 5435,
     });
 
-    this._defineModel();
+    await this._defineModel();
   }
 
-  _defineModel() {
+  async _defineModel() {
     this._heroes = this._driver.define('heroes', {
         id: {
           type: Sequelize.INTEGER,
@@ -41,10 +40,13 @@ class PostgresStrategy extends ICrud {
         tableName: 'hero',
         timestamps: false
       });
+
+    await this._driver.sync();
   }
 
-  create(item) {
-    console.log('Item created on Postgres');
+  async create(item) {
+    const { dataValues: result } = await this._heroes.create(item);
+    return result;
   }
 
   async isConnected() {
