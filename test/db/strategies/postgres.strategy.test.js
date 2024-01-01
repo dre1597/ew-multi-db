@@ -46,19 +46,18 @@ describe('Postgres Strategy', function () {
 
   it('Postgres update', async () => {
     const [result] = await context.read({ name: HERO_UPDATE_MOCK.name });
+    const id = result.id;
     result.name = 'new_name';
-    const [resultUpdate] = await context.update(result.id, result);
-    delete resultUpdate.id;
-    assert.deepEqual(resultUpdate, {
-      ...result,
-      name: 'new_name',
-    });
+    await context.update(id, result);
+    const [updatedResult] = await context.read({ id });
+    delete updatedResult.id;
+    assert.deepEqual(updatedResult, result);
   });
 
   it('Postgres delete', async () => {
-    await context.create(HERO_DELETE_MOCK);
-    const [result] = await context.read({ name: HERO_DELETE_MOCK.name });
-    const resultDelete = await context.delete(result.id);
-    assert.deepEqual(resultDelete, 1);
+    const heroToDelete = await context.create(HERO_DELETE_MOCK);
+    await context.delete(heroToDelete.id);
+    const [deletedResult] = await context.read({ id: heroToDelete.id });
+    assert.deepEqual(deletedResult, undefined);
   });
 });

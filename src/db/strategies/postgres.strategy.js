@@ -55,13 +55,12 @@ class PostgresStrategy extends ICrud {
 
   async update(id, item) {
     delete item.id;
-    const [_, result] = await this._heroes.update(item, { where: { id }, returning: true, raw: true });
-    return result;
+    await this._heroes.update(item, { where: { id } });
   }
 
   async delete(id) {
     const query = id ? { id } : {};
-    return await this._heroes.destroy({ where: query });
+    await this._heroes.destroy({ where: query });
   }
 
   async isConnected() {
