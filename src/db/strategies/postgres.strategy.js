@@ -49,6 +49,10 @@ class PostgresStrategy extends ICrud {
     return result;
   }
 
+  async read(query = {}) {
+    return await this._heroes.findAll({ where: query, raw: true });
+  }
+
   async isConnected() {
     try {
       await this._driver.authenticate();
