@@ -59,6 +59,11 @@ class PostgresStrategy extends ICrud {
     return result;
   }
 
+  async delete(id) {
+    const query = id ? { id } : {};
+    return await this._heroes.destroy({ where: query });
+  }
+
   async isConnected() {
     try {
       await this._driver.authenticate();

@@ -10,7 +10,12 @@ const HERO_CREATED_MOCK = {
 
 const HERO_UPDATE_MOCK = {
   name: 'hero_to_update',
-  power: 'new_power',
+  power: 'any_power',
+};
+
+const HERO_DELETE_MOCK = {
+  name: 'hero_to_delete',
+  power: 'any_power',
 };
 
 describe('Postgres Strategy', function () {
@@ -18,6 +23,7 @@ describe('Postgres Strategy', function () {
 
   this.beforeAll(async () => {
     await context.connect();
+    await context.delete();
     await context.create(HERO_UPDATE_MOCK);
   });
 
@@ -47,5 +53,12 @@ describe('Postgres Strategy', function () {
       ...result,
       name: 'new_name',
     });
+  });
+
+  it('Postgres delete', async () => {
+    await context.create(HERO_DELETE_MOCK);
+    const [result] = await context.read({ name: HERO_DELETE_MOCK.name });
+    const resultDelete = await context.delete(result.id);
+    assert.deepEqual(resultDelete, 1);
   });
 });
