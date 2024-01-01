@@ -1,8 +1,9 @@
 const assert = require('assert');
-const PostgresStrategy = require('../../../src/db/strategies/postgres.strategy');
+const PostgresStrategy = require('../../../src/db/strategies/postgres/postgres.strategy');
+const HeroesSchema = require('../../../src/db/strategies/postgres/schemas/heroes.schema');
 const Context = require('../../../src/db/strategies/base/context.strategy');
 
-const context = new Context(new PostgresStrategy());
+let context = {};
 const HERO_CREATED_MOCK = {
   name: 'any_name',
   power: 'any_power',
@@ -20,7 +21,9 @@ const HERO_DELETE_MOCK = {
 
 describe('Postgres Strategy', function () {
   this.beforeAll(async () => {
-    await context.connect();
+    const connection = await PostgresStrategy.connect();
+    const model = await PostgresStrategy.defineModel(connection, HeroesSchema);
+    context = new Context(new PostgresStrategy(connection, model));
     await context.delete();
     await context.create(HERO_UPDATE_MOCK);
   });
