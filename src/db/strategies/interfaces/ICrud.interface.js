@@ -1,6 +1,10 @@
-const NotImplementedError = require('../../../exceptions/not-implemented-error.error');
+const NotImplementedError = require('../../exceptions/not-implemented-error.error');
 
 class ICrud {
+  static connect() {
+    throw new NotImplementedError();
+  }
+
   create(item) {
     throw new NotImplementedError();
   }
@@ -18,10 +22,6 @@ class ICrud {
   }
 
   isConnected() {
-    throw new NotImplementedError();
-  }
-
-  connect() {
     throw new NotImplementedError();
   }
 }

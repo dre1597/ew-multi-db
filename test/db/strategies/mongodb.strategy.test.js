@@ -1,8 +1,8 @@
 const assert = require('assert');
-const MongoDBStrategy = require('../../../src/db/strategies/mongodb.strategy');
+const MongoDBStrategy = require('../../../src/db/strategies/mongodb/mongodb.strategy');
 const Context = require('../../../src/db/strategies/base/context.strategy');
-
-const context = new Context(new MongoDBStrategy());
+const HeroesSchema = require('../../../src/db/strategies/mongodb/schemas/heroes.schema');
+let context = {};
 
 const HERO_CREATED_MOCK = {
   name: 'any_name',
@@ -18,7 +18,8 @@ let HERO_UPDATE_MOCK_ID = '';
 
 describe('MongoDB Strategy', function () {
   this.beforeAll(async () => {
-    await context.connect();
+    const connection = MongoDBStrategy.connect();
+    context = new Context(new MongoDBStrategy(connection, HeroesSchema));
     await context.delete();
     const result = await context.create(HERO_UPDATE_MOCK);
     HERO_UPDATE_MOCK_ID = result._id;

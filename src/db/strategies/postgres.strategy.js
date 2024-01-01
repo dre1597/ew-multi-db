@@ -1,4 +1,4 @@
-const ICrud = require('./base/interfaces/ICrud.interface');
+const ICrud = require('./interfaces/ICrud.interface');
 const Sequelize = require('sequelize');
 
 class PostgresStrategy extends ICrud {
