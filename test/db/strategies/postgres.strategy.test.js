@@ -8,11 +8,17 @@ const HERO_CREATED_MOCK = {
   power: 'any_power',
 };
 
+const HERO_UPDATE_MOCK = {
+  name: 'hero_to_update',
+  power: 'new_power',
+};
+
 describe('Postgres Strategy', function () {
   this.timeout(Infinity);
 
   this.beforeAll(async () => {
     await context.connect();
+    await context.create(HERO_UPDATE_MOCK);
   });
 
   it('Postgres connection', async () => {
@@ -30,5 +36,16 @@ describe('Postgres Strategy', function () {
     const [result] = await context.read({ name: HERO_CREATED_MOCK.name });
     delete result.id;
     assert.deepEqual(result, HERO_CREATED_MOCK);
+  });
+
+  it('Postgres update', async () => {
+    const [result] = await context.read({ name: HERO_UPDATE_MOCK.name });
+    result.name = 'new_name';
+    const [resultUpdate] = await context.update(result.id, result);
+    delete resultUpdate.id;
+    assert.deepEqual(resultUpdate, {
+      ...result,
+      name: 'new_name',
+    });
   });
 });
