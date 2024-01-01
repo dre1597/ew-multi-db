@@ -17,8 +17,6 @@ const HERO_UPDATE_MOCK = {
 let HERO_UPDATE_MOCK_ID = '';
 
 describe('MongoDB Strategy', function () {
-  this.timeout(Infinity);
-
   this.beforeAll(async () => {
     await context.connect();
     await context.delete();

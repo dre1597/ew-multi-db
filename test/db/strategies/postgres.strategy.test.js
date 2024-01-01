@@ -19,8 +19,6 @@ const HERO_DELETE_MOCK = {
 };
 
 describe('Postgres Strategy', function () {
-  this.timeout(Infinity);
-
   this.beforeAll(async () => {
     await context.connect();
     await context.delete();
