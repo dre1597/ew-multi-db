@@ -1,7 +1,7 @@
 const assert = require('assert');
-const PostgresStrategy = require('../../../src/db/strategies/postgres/postgres.strategy');
-const HeroesSchema = require('../../../src/db/strategies/postgres/schemas/heroes.schema');
-const Context = require('../../../src/db/strategies/base/context.strategy');
+const PostgresStrategy = require('../../../../src/db/strategies/postgres/postgres.strategy');
+const HeroesSchema = require('../../../../src/db/strategies/postgres/schemas/heroes.schema');
+const Context = require('../../../../src/db/strategies/base/context.strategy');
 
 let context = {};
 const HERO_CREATED_MOCK = {

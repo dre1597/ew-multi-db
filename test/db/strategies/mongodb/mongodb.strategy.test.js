@@ -1,7 +1,7 @@
 const assert = require('assert');
-const MongoDBStrategy = require('../../../src/db/strategies/mongodb/mongodb.strategy');
-const Context = require('../../../src/db/strategies/base/context.strategy');
-const HeroesSchema = require('../../../src/db/strategies/mongodb/schemas/heroes.schema');
+const MongoDBStrategy = require('../../../../src/db/strategies/mongodb/mongodb.strategy');
+const Context = require('../../../../src/db/strategies/base/context.strategy');
+const HeroesSchema = require('../../../../src/db/strategies/mongodb/schemas/heroes.schema');
 let context = {};
 
 const HERO_CREATED_MOCK = {
