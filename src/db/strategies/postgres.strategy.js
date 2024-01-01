@@ -8,6 +8,16 @@ class PostgresStrategy extends ICrud {
     this._heroes = null;
   }
 
+  async isConnected() {
+    try {
+      await this._driver.authenticate();
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   async connect() {
     this._driver = new Sequelize('heroes', 'postgres', 'postgres', {
       host: 'localhost',
@@ -61,16 +71,6 @@ class PostgresStrategy extends ICrud {
   async delete(id) {
     const query = id ? { id } : {};
     await this._heroes.destroy({ where: query });
-  }
-
-  async isConnected() {
-    try {
-      await this._driver.authenticate();
-      return true;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
   }
 }
 
